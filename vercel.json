@@ -10,10 +10,17 @@
             "use": "@vercel/next"
         }
     ],
-    "rewrites": [
+    "routes": [
         {
-            "source": "/api/v1/(.*)",
-            "destination": "/apps/backend/src/vercel.ts"
+            "src": "/api/v1/(.*)",
+            "dest": "/apps/backend/src/vercel.ts"
+        },
+        {
+            "handle": "filesystem"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/apps/frontend/$1"
         }
     ]
 }

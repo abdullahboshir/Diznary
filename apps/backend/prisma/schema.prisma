@@ -1,0 +1,131 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  MANAGER
+  customer
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      Role     @default(customer)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  customerProfile Customer?
+  orders          Order[]
+}
+
+model Customer {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  name      String?
+  phone     String?
+  address   String?
+  
+  orders    Order[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Department {
+  id         String     @id @default(uuid())
+  name       String
+  imageUrl   String?
+  categories Category[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model Category {
+  id            String        @id @default(uuid())
+  name          String
+  imageUrl      String?
+  departmentId  String
+  department    Department    @relation(fields: [departmentId], references: [id])
+  subCategories SubCategory[]
+  products      Product[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model SubCategory {
+  id              String          @id @default(uuid())
+  name            String
+  categoryId      String
+  category        Category        @relation(fields: [categoryId], references: [id])
+  childCategories ChildCategory[]
+  products        Product[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
+model ChildCategory {
+  id            String      @id @default(uuid())
+  name          String
+  subCategoryId String
+  subCategory   SubCategory @relation(fields: [subCategoryId], references: [id])
+  products      Product[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model Product {
+  id              String         @id @default(uuid())
+  name            String
+  description     String?
+  price           Float
+  stock           Int            @default(0)
+  images          String[]
+  
+  categoryId      String?
+  category        Category?      @relation(fields: [categoryId], references: [id])
+  
+  subCategoryId   String?
+  subCategory     SubCategory?   @relation(fields: [subCategoryId], references: [id])
+  
+  childCategoryId String?
+  childCategory   ChildCategory? @relation(fields: [childCategoryId], references: [id])
+  
+  orderItems      OrderItem[]
+
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+model Order {
+  id         String      @id @default(uuid())
+  userId     String?
+  user       User?       @relation(fields: [userId], references: [id])
+  customerId String?
+  customer   Customer?   @relation(fields: [customerId], references: [id])
+  
+  totalAmount Float
+  status      String     @default("PENDING")
+  
+  items       OrderItem[]
+  
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+}

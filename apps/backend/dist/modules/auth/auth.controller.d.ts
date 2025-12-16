@@ -8,4 +8,7 @@ export declare class AuthController {
     changePassword(body: any): Promise<{
         message: string;
     }>;
+    refreshToken(body: any, req: any): Promise<{
+        accessToken: string;
+    }>;
 }

@@ -20,11 +20,35 @@ let ProductsController = class ProductsController {
     constructor(productsService) {
         this.productsService = productsService;
     }
-    create(body) {
-        return this.productsService.create(body);
+    async create(body) {
+        console.log('--- Create Product Request ---');
+        console.log('Payload:', JSON.stringify(body, null, 2));
+        try {
+            const result = await this.productsService.create(body);
+            console.log('Creation Result:', result);
+            return {
+                statusCode: 201,
+                success: true,
+                message: 'Product created successfully',
+                data: result
+            };
+        }
+        catch (error) {
+            console.error('Create Product Error:', error);
+            return {
+                statusCode: 500,
+                message: error.message || 'Internal server error',
+                error: error
+            };
+        }
     }
-    findAll() {
-        return this.productsService.findAll();
+    async findAll() {
+        const result = await this.productsService.findAll();
+        return {
+            statusCode: 200,
+            success: true,
+            data: result
+        };
     }
     findOne(id) {
         return this.productsService.findOne(id);
@@ -42,13 +66,13 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], ProductsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)('getProducts'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], ProductsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),

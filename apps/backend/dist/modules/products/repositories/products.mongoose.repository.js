@@ -24,6 +24,18 @@ let ProductsMongooseRepository = class ProductsMongooseRepository extends mongoo
         super(productModel);
         this.productModel = productModel;
     }
+    async findAll(filter = {}) {
+        return this.productModel.find(filter)
+            .populate('category')
+            .populate('department')
+            .exec();
+    }
+    async findOne(id) {
+        return this.productModel.findById(id)
+            .populate('category')
+            .populate('department')
+            .exec();
+    }
 };
 exports.ProductsMongooseRepository = ProductsMongooseRepository;
 exports.ProductsMongooseRepository = ProductsMongooseRepository = __decorate([

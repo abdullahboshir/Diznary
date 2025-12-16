@@ -30,6 +30,22 @@ let AuthController = class AuthController {
     async changePassword(body) {
         return this.authService.changePassword(body.userId, body.oldPassword, body.newPassword);
     }
+    async refreshToken(body, req) {
+        const refreshToken = req.cookies?.['refreshToken'];
+        if (!refreshToken) {
+            throw new common_1.UnauthorizedException('No refresh token found');
+        }
+        const jwt = require('jsonwebtoken');
+        const decoded = jwt.decode(refreshToken);
+        if (!decoded) {
+            throw new common_1.UnauthorizedException('Invalid refresh token');
+        }
+        return this.authService.refreshToken({
+            userId: decoded.sub,
+            email: decoded.email,
+            role: decoded.role
+        });
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
@@ -46,6 +62,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "changePassword", null);
+__decorate([
+    (0, common_1.Post)('refresh-token'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "refreshToken", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])

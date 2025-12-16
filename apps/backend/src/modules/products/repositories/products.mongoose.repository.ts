@@ -14,4 +14,18 @@ export class ProductsMongooseRepository
     ) {
         super(productModel);
     }
+
+    async findAll(filter: any = {}): Promise<Product[]> {
+        return this.productModel.find(filter)
+            .populate('category')
+            .populate('department')
+            .exec();
+    }
+
+    async findOne(id: string): Promise<Product | null> {
+        return this.productModel.findById(id)
+            .populate('category')
+            .populate('department')
+            .exec();
+    }
 }

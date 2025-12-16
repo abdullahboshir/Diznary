@@ -20,6 +20,12 @@ export class OrderItem {
 
     @Prop({ required: true })
     price: number;
+
+    @Prop({ required: false })
+    category?: string;
+
+    @Prop({ required: false })
+    department?: string;
 }
 
 @Schema({ timestamps: true })

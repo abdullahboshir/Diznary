@@ -15,7 +15,47 @@ export class OrdersMongooseRepository
         super(orderModel);
     }
 
+    async findAll(filter: any = {}): Promise<Order[]> {
+        return this.orderModel.find(filter)
+            .populate({
+                path: 'items.productId',
+                model: 'Product',
+                strictPopulate: false,
+                populate: [
+                    { path: 'category', strictPopulate: false },
+                    { path: 'department', strictPopulate: false }
+                ]
+            } as any)
+            .populate('userId')
+            .exec();
+    }
+
+    async findOne(id: string): Promise<Order | null> {
+        return this.orderModel.findById(id)
+            .populate({
+                path: 'items.productId',
+                model: 'Product',
+                strictPopulate: false,
+                populate: [
+                    { path: 'category', strictPopulate: false },
+                    { path: 'department', strictPopulate: false }
+                ]
+            } as any)
+            .populate('userId')
+            .exec();
+    }
+
     async findByUser(userId: string): Promise<Order[]> {
-        return this.orderModel.find({ userId }).exec();
+        return this.orderModel.find({ userId })
+            .populate({
+                path: 'items.productId',
+                model: 'Product',
+                strictPopulate: false,
+                populate: [
+                    { path: 'category', strictPopulate: false },
+                    { path: 'department', strictPopulate: false }
+                ]
+            } as any)
+            .exec();
     }
 }

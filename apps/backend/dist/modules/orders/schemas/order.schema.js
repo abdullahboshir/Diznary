@@ -22,6 +22,8 @@ let OrderItem = class OrderItem {
     productId;
     quantity;
     price;
+    category;
+    department;
 };
 exports.OrderItem = OrderItem;
 __decorate([
@@ -36,6 +38,14 @@ __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", Number)
 ], OrderItem.prototype, "price", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: false }),
+    __metadata("design:type", String)
+], OrderItem.prototype, "category", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: false }),
+    __metadata("design:type", String)
+], OrderItem.prototype, "department", void 0);
 exports.OrderItem = OrderItem = __decorate([
     (0, mongoose_1.Schema)()
 ], OrderItem);

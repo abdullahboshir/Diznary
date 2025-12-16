@@ -24,8 +24,46 @@ let OrdersMongooseRepository = class OrdersMongooseRepository extends mongoose_r
         super(orderModel);
         this.orderModel = orderModel;
     }
+    async findAll(filter = {}) {
+        return this.orderModel.find(filter)
+            .populate({
+            path: 'items.productId',
+            model: 'Product',
+            strictPopulate: false,
+            populate: [
+                { path: 'category', strictPopulate: false },
+                { path: 'department', strictPopulate: false }
+            ]
+        })
+            .populate('userId')
+            .exec();
+    }
+    async findOne(id) {
+        return this.orderModel.findById(id)
+            .populate({
+            path: 'items.productId',
+            model: 'Product',
+            strictPopulate: false,
+            populate: [
+                { path: 'category', strictPopulate: false },
+                { path: 'department', strictPopulate: false }
+            ]
+        })
+            .populate('userId')
+            .exec();
+    }
     async findByUser(userId) {
-        return this.orderModel.find({ userId }).exec();
+        return this.orderModel.find({ userId })
+            .populate({
+            path: 'items.productId',
+            model: 'Product',
+            strictPopulate: false,
+            populate: [
+                { path: 'category', strictPopulate: false },
+                { path: 'department', strictPopulate: false }
+            ]
+        })
+            .exec();
     }
 };
 exports.OrdersMongooseRepository = OrdersMongooseRepository;

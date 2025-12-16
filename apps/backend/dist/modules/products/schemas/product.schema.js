@@ -9,15 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProductSchema = exports.Product = exports.ProductCategory = void 0;
+exports.ProductSchema = exports.Product = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-var ProductCategory;
-(function (ProductCategory) {
-    ProductCategory["GRAPHICS_DESIGN"] = "Graphics Design";
-    ProductCategory["DIGITAL"] = "Digital";
-    ProductCategory["WEB_DEVELOPMENT"] = "Web Development";
-})(ProductCategory || (exports.ProductCategory = ProductCategory = {}));
 let Product = class Product extends mongoose_2.Document {
     name;
     description;
@@ -25,6 +19,7 @@ let Product = class Product extends mongoose_2.Document {
     priceUSD;
     priceBDT;
     category;
+    department;
     images;
     isActive;
 };
@@ -50,9 +45,13 @@ __decorate([
     __metadata("design:type", Number)
 ], Product.prototype, "priceBDT", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true, enum: ProductCategory }),
-    __metadata("design:type", String)
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'Category', required: true }),
+    __metadata("design:type", Object)
 ], Product.prototype, "category", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'Department' }),
+    __metadata("design:type", Object)
+], Product.prototype, "department", void 0);
 __decorate([
     (0, mongoose_1.Prop)([String]),
     __metadata("design:type", Array)

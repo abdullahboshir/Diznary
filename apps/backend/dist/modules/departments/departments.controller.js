@@ -23,8 +23,12 @@ let DepartmentsController = class DepartmentsController {
     create(body) {
         return this.departmentsService.create(body);
     }
-    findAll() {
-        return this.departmentsService.findAll();
+    async findAll() {
+        const result = await this.departmentsService.findAll();
+        return {
+            data: result,
+            message: "Departments fetched successfully"
+        };
     }
     findOne(id) {
         return this.departmentsService.findOne(id);
@@ -48,7 +52,7 @@ __decorate([
     (0, common_1.Get)('getDepartments'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], DepartmentsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),

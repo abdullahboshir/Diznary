@@ -5,5 +5,7 @@ import { ICategoriesRepository } from './categories.repository.interface';
 export declare class CategoriesMongooseRepository extends MongooseRepository<Category> implements ICategoriesRepository {
     private readonly categoryModel;
     constructor(categoryModel: Model<Category>);
+    findAll(filter?: any): Promise<Category[]>;
+    findOne(id: string): Promise<Category | null>;
     findAllByDepartment(departmentId: string): Promise<Category[]>;
 }

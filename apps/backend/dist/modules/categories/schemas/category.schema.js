@@ -15,7 +15,8 @@ const mongoose_2 = require("mongoose");
 let Category = class Category extends mongoose_2.Document {
     name;
     description;
-    departmentId;
+    department;
+    image;
 };
 exports.Category = Category;
 __decorate([
@@ -29,7 +30,11 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'Department', required: true }),
     __metadata("design:type", Object)
-], Category.prototype, "departmentId", void 0);
+], Category.prototype, "department", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Category.prototype, "image", void 0);
 exports.Category = Category = __decorate([
     (0, mongoose_1.Schema)({ timestamps: true })
 ], Category);

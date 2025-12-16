@@ -11,8 +11,12 @@ export class DepartmentsController {
     }
 
     @Get('getDepartments')
-    findAll() {
-        return this.departmentsService.findAll();
+    async findAll() {
+        const result = await this.departmentsService.findAll();
+        return {
+            data: result,
+            message: "Departments fetched successfully"
+        };
     }
 
     @Get(':id')

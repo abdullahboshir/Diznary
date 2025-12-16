@@ -24,8 +24,20 @@ let CategoriesMongooseRepository = class CategoriesMongooseRepository extends mo
         super(categoryModel);
         this.categoryModel = categoryModel;
     }
+    async findAll(filter = {}) {
+        return this.categoryModel.find(filter)
+            .populate('department')
+            .exec();
+    }
+    async findOne(id) {
+        return this.categoryModel.findById(id)
+            .populate('department')
+            .exec();
+    }
     async findAllByDepartment(departmentId) {
-        return this.categoryModel.find({ departmentId }).exec();
+        return this.categoryModel.find({ department: departmentId })
+            .populate('department')
+            .exec();
     }
 };
 exports.CategoriesMongooseRepository = CategoriesMongooseRepository;

@@ -9,6 +9,8 @@ export declare class OrderItem {
     productId: string;
     quantity: number;
     price: number;
+    category?: string;
+    department?: string;
 }
 export declare class Order extends Document {
     userId: User | Types.ObjectId;

@@ -3,7 +3,8 @@ import { Department } from '../../departments/schemas/department.schema';
 export declare class Category extends Document {
     name: string;
     description: string;
-    departmentId: Department | Types.ObjectId;
+    department: Department | Types.ObjectId;
+    image: string;
 }
 export declare const CategorySchema: import("mongoose").Schema<Category, import("mongoose").Model<Category, any, any, any, Document<unknown, any, Category, any, {}> & Category & Required<{
     _id: Types.ObjectId;

@@ -15,7 +15,21 @@ export class CategoriesMongooseRepository
         super(categoryModel);
     }
 
+    async findAll(filter: any = {}): Promise<Category[]> {
+        return this.categoryModel.find(filter)
+            .populate('department')
+            .exec();
+    }
+
+    async findOne(id: string): Promise<Category | null> {
+        return this.categoryModel.findById(id)
+            .populate('department')
+            .exec();
+    }
+
     async findAllByDepartment(departmentId: string): Promise<Category[]> {
-        return this.categoryModel.find({ departmentId }).exec();
+        return this.categoryModel.find({ department: departmentId })
+            .populate('department')
+            .exec();
     }
 }

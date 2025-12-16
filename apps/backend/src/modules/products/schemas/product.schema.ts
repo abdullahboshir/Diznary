@@ -1,12 +1,8 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-
-export enum ProductCategory {
-    GRAPHICS_DESIGN = 'Graphics Design',
-    DIGITAL = 'Digital',
-    WEB_DEVELOPMENT = 'Web Development',
-}
+import { Document, Types } from 'mongoose';
+import { Department } from '../../departments/schemas/department.schema';
+import { Category } from '../../categories/schemas/category.schema';
 
 @Schema({ timestamps: true })
 export class Product extends Document {
@@ -25,8 +21,11 @@ export class Product extends Document {
     @Prop({ required: false })
     priceBDT?: number;
 
-    @Prop({ required: true, enum: ProductCategory })
-    category: ProductCategory;
+    @Prop({ type: Types.ObjectId, ref: 'Category', required: true })
+    category: Category | Types.ObjectId;
+
+    @Prop({ type: Types.ObjectId, ref: 'Department' })
+    department: Department | Types.ObjectId;
 
     @Prop([String])
     images: string[];

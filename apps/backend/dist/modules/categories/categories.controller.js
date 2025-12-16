@@ -20,11 +20,28 @@ let CategoriesController = class CategoriesController {
     constructor(categoriesService) {
         this.categoriesService = categoriesService;
     }
-    create(body) {
-        return this.categoriesService.create(body);
+    async create(body) {
+        try {
+            return await this.categoriesService.create(body);
+        }
+        catch (error) {
+            console.error('Create Category Error:', error);
+            throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
-    findByDepartment(departmentId) {
-        return this.categoriesService.findAllByDepartment(departmentId);
+    async findByDepartment(departmentId) {
+        const result = await this.categoriesService.findAllByDepartment(departmentId);
+        return {
+            data: result,
+            message: "Categories fetched successfully"
+        };
+    }
+    async findAll() {
+        const result = await this.categoriesService.findAll();
+        return {
+            data: result,
+            message: "All categories fetched successfully"
+        };
     }
     findOne(id) {
         return this.categoriesService.findOne(id);
@@ -42,15 +59,21 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], CategoriesController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(':departmentId/getCategories'),
     __param(0, (0, common_1.Param)('departmentId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], CategoriesController.prototype, "findByDepartment", null);
+__decorate([
+    (0, common_1.Get)('getAll/categories'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], CategoriesController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

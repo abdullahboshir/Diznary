@@ -89,6 +89,12 @@ let AuthService = class AuthService {
         await this.usersService.update(userId, { password: hashedNewPass });
         return { message: 'Password updated successfully' };
     }
+    async refreshToken(user) {
+        const payload = { email: user.email, sub: user.userId, role: user.role };
+        return {
+            accessToken: this.jwtService.sign(payload),
+        };
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([

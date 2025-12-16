@@ -12,7 +12,10 @@ export class Category extends Document {
     description: string;
 
     @Prop({ type: Types.ObjectId, ref: 'Department', required: true })
-    departmentId: Department | Types.ObjectId;
+    department: Department | Types.ObjectId;
+
+    @Prop()
+    image: string;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);

@@ -55,4 +55,10 @@ export class AuthService {
 
         return { message: 'Password updated successfully' };
     }
+    async refreshToken(user: any) {
+        const payload = { email: user.email, sub: user.userId, role: user.role };
+        return {
+            accessToken: this.jwtService.sign(payload),
+        };
+    }
 }

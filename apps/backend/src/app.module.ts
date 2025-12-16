@@ -13,6 +13,8 @@ import { OrdersModule } from './modules/orders/orders.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { ContactModule } from './modules/contact/contact.module';
 import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
+import { ChatModule } from './modules/chat/chat.module';
+import { PackagesModule } from './modules/packages/packages.module';
 
 @Module({
   imports: [
@@ -28,6 +30,8 @@ import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
     PaymentModule,
     ContactModule,
     CloudinaryModule,
+    ChatModule,
+    PackagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

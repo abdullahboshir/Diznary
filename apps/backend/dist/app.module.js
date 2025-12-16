@@ -22,6 +22,8 @@ const orders_module_1 = require("./modules/orders/orders.module");
 const payment_module_1 = require("./modules/payment/payment.module");
 const contact_module_1 = require("./modules/contact/contact.module");
 const cloudinary_module_1 = require("./modules/cloudinary/cloudinary.module");
+const chat_module_1 = require("./modules/chat/chat.module");
+const packages_module_1 = require("./modules/packages/packages.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -40,6 +42,8 @@ exports.AppModule = AppModule = __decorate([
             payment_module_1.PaymentModule,
             contact_module_1.ContactModule,
             cloudinary_module_1.CloudinaryModule,
+            chat_module_1.ChatModule,
+            packages_module_1.PackagesModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
